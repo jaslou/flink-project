@@ -1,4 +1,4 @@
-package com.jaslou.tabl.api.batch
+package com.jaslou.table.api.batch
 
 import org.apache.flink.api.scala.ExecutionEnvironment
 import org.apache.flink.table.api.scala.BatchTableEnvironment

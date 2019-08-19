@@ -1,4 +1,4 @@
-package com.jaslou.tabl.api.stream
+package com.jaslou.table.api.stream
 
 import org.apache.flink.api.common.typeinfo.{TypeInformation, Types}
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
