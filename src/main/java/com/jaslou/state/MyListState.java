@@ -1,4 +1,4 @@
-package com.jaslou.state.java;
+package com.jaslou.state;
 
 import org.apache.flink.api.common.functions.RichFlatMapFunction;
 import org.apache.flink.api.common.state.ListState;
