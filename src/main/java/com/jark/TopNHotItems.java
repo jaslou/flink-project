@@ -52,7 +52,7 @@ public class TopNHotItems extends KeyedProcessFunction<Tuple, ItemViewCount, Str
         StringBuilder result = new StringBuilder();
         result.append("====================================\n");
         result.append("时间: ").append(new Timestamp(timestamp-1)).append("\n");
-        for (int i = 0; i < allItems.size(); i++) {
+        for (int i = 0; i < allItems.size() && i < topSize; i++) {
             ItemViewCount currentItem = allItems.get(i);
             result.append("No").append(i).append(": ")
                     .append("商品ID=").append(currentItem.getItemId()).append("\t")
