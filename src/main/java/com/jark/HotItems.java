@@ -54,11 +54,13 @@ public class HotItems {
 		env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 		// 为了打印到控制台的结果不乱序，我们配置全局的并发为1，改变并发对结果正确性没有影响
 		env.setParallelism(1);
+		env.enableCheckpointing(1000);
+//		env.setStateBackend(new Rocks)
 
 		// UserBehavior.csv 的本地文件路径, 在 resources 目录下
 		URL fileUrl = HotItems.class.getClassLoader().getResource("UserBehavior.csv");
 		Path filePath = Path.fromLocalFile(new File(fileUrl.toURI()));
-		// 抽取 UserBehavior 的 TypeInformation，是一个 PojoTypeInfo
+		// 抽取 UserBehavior 的 TypeInformation，是一个 TypeInfo
 		PojoTypeInfo<UserBehavior> pojoType = (PojoTypeInfo<UserBehavior>) TypeExtractor.createTypeInfo(UserBehavior.class);
 		// 由于 Java 反射抽取出的字段顺序是不确定的，需要显式指定下文件中字段的顺序
 		String[] fieldOrder = new String[]{"userId", "itemId", "categoryId", "behavior", "timestamp"};

@@ -16,6 +16,10 @@ public class UserBehavior {
         this.timestamp = timestamp;
     }
 
+    public UserBehavior(){
+
+    }
+
     @Override
     public String toString() {
         return "UserBehavior{" +
