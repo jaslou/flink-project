@@ -29,8 +29,9 @@ public class UserBehaviorSource extends RichParallelSourceFunction<UserBehavior>
             int categoryId = rand.nextInt(4);// 商品类目ID
             long timeStamp = Calendar.getInstance().getTimeInMillis(); // 行为发生的时间戳，单位秒
             String behavior = behaviorType[rand.nextInt(3)]; // 用户行为, 包括("pv", "buy", "cart", "fav")
-            sourceContext.collect(new UserBehavior(userId, itemId, categoryId, behavior, timeStamp));
-
+            UserBehavior user =  new UserBehavior(userId, itemId, categoryId, behavior, timeStamp);
+            sourceContext.collect(user);
+            System.out.println(user.toString());
             // wait for 100 ms
             Thread.sleep(100);
         }
