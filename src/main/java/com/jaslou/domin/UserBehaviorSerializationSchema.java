@@ -8,7 +8,10 @@ import org.apache.flink.api.common.typeinfo.TypeInformation;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class UserDeserializationSchema implements DeserializationSchema<UserBehavior>, SerializationSchema<UserBehavior> {
+/**
+ * define a de/serializationSchema
+ */
+public class UserBehaviorSerializationSchema implements DeserializationSchema<UserBehavior>, SerializationSchema<UserBehavior> {
 
     @Override
     public UserBehavior deserialize(byte[] message) throws IOException {
