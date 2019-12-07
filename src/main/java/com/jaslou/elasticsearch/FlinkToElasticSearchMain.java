@@ -26,27 +26,21 @@ public class FlinkToElasticSearchMain {
 
         env.setParallelism(4);
 
-        /**
-         * create flink data Source
-         */
+        //create flink data Source
         DataStream<UserBehavior> source = env.addSource(new UserBehaviorSource());
 
-        /**
-         * filter the data
-         */
+        // filter the data
         DataStream<UserBehavior> filterSource = source.filter(new FilterFunction<UserBehavior>() {
             @Override
             public boolean filter(UserBehavior userBehavior) throws Exception {
-                if("buy".equals(userBehavior.behavior)){
-                    return true;
-                }
-                return false;
+//                if("buy".equals(userBehavior.behavior)){
+//                    return true;
+//                }
+                return true;
             }
         });
 
-        /**
-         * transfer data to json
-         */
+        // transfer data to json
         DataStream<JSONObject> transferSource = filterSource.map(new MapFunction<UserBehavior, JSONObject>() {
             @Override
             public JSONObject map(UserBehavior userBehavior) throws Exception {
@@ -56,16 +50,11 @@ public class FlinkToElasticSearchMain {
                 return jsonObject;
             }
         });
-
-
-
-        /**
-         * create a elasticsearch instance
-         */
-
+         // create a elasticsearch instance
         List<HttpHost> httpHost = new ArrayList<>();
         httpHost.add(new HttpHost("192.168.244.10", 9200, "http"));
-
+        httpHost.add(new HttpHost("192.168.244.11", 9201, "http"));
+        httpHost.add(new HttpHost("192.168.244.12", 9202, "http"));
         ElasticsearchSink.Builder<JSONObject> esSinkBuilder = new ElasticsearchSink.Builder<JSONObject>(
                 httpHost,
                 new ElasticsearchSinkFunction<JSONObject>() {
@@ -76,7 +65,6 @@ public class FlinkToElasticSearchMain {
                     }
                 }
         );
-
         // set numMaxActions
         esSinkBuilder.setBulkFlushMaxActions(50);
         //sink the esSinkBuilder to flink sink
