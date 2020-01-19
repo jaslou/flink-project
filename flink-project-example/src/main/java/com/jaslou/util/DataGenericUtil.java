@@ -35,7 +35,7 @@ public class DataGenericUtil {
                     .append(url[i]).append("\t")
                     .append(method[i%2]).append("\n");
         }
-        File file = new File("/home/hadoop/flink-project/hot-item/src/main/resources/apache.log");
+        File file = new File("F:/flink-project/flink-project/user-behavior-analysis/src/main/resources/apache.log");
         if (!file.exists()) {
             file.createNewFile();
         }
