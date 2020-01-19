@@ -2,24 +2,18 @@ package com.jaslou.adclickAnalysis;
 
 import com.jaslou.adclickAnalysis.domain.AdClickEvent;
 import com.jaslou.adclickAnalysis.domain.AdClickResult;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import jdk.nashorn.internal.codegen.types.Type;
-import org.apache.commons.net.ntp.TimeStamp;
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.common.typeinfo.Types;
 import org.apache.flink.api.java.io.PojoCsvInputFormat;
 import org.apache.flink.api.java.tuple.Tuple;
 import org.apache.flink.api.java.tuple.Tuple1;
-import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.typeutils.PojoTypeInfo;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.core.fs.Path;
 import org.apache.flink.streaming.api.TimeCharacteristic;
-import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
@@ -29,7 +23,6 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
-import org.joda.time.Hours;
 
 import java.io.File;
 import java.net.URL;
@@ -145,9 +138,6 @@ class AdClickKeyedProcessFunction extends KeyedProcessFunction<Tuple, AdClickEve
     // 指定用户点击次数上限
     public int clickMaxCount;
 
-    // 当前用户对广告的点击
-    long curCount = 0L;
-
     // 侧输出流
     public OutputTag<String> outputTag;
 
@@ -178,18 +168,20 @@ class AdClickKeyedProcessFunction extends KeyedProcessFunction<Tuple, AdClickEve
     @Override
     public void processElement(AdClickEvent value, Context ctx, Collector<AdClickEvent> out) throws Exception {
         // 1. 获取当前状态
-        curCount = userClickCount.value();
+        Long curCount = userClickCount.value();
+        Boolean flag = isFilter.value();
 
         //2 . 注册定时器，每天凌晨00:00触发
-        if (curCount == 0) {
+        if (curCount == null) {
             long ts = (ctx.timerService().currentProcessingTime() / (1000 * 60 * 60 * 24) + 1) * (1000 * 60 * 60 * 24);
             timmer.update(ts);
             ctx.timerService().registerProcessingTimeTimer(ts);
+            curCount = 0L;
         }
 
         //3. 当前状态和指定上限比较，如果达标，则加入黑名单，并输出以便输出到侧输出流
         if (curCount >= clickMaxCount) {
-            if (!isFilter.value()) {// 如果没有过滤过，则更新过滤标志，并
+            if (flag == null) {//如果第一次达到点击上限，则更新标志
                 isFilter.update(true);
                 // 侧流输出
                 ctx.output(outputTag,  "用户：" + value.userId + "\t" + "广告：" + value.adId + "\t 点击了：" + clickMaxCount + "次");
