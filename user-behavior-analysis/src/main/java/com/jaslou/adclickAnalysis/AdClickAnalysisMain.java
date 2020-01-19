@@ -63,7 +63,8 @@ public class AdClickAnalysisMain {
 
         // 4. 使用process function，过滤大量点击用户
         // 定义侧输出流
-        OutputTag<String> outputTagAdClick = new OutputTag<>("filterUserClick",TypeExtractor.createTypeInfo(String.class));
+        OutputTag<String> outputTagAdClick = new OutputTag<String>("filterUserClick"){};
+        //OutputTag<String> outputTagAdClick = new OutputTag<>("filterUserClick",TypeExtractor.createTypeInfo(String.class));
         SingleOutputStreamOperator<AdClickEvent> adClickFilterUser = adClickEventStream
                 .keyBy("userId", "adId")// KeyStream<AdClickEvent, Tuple>
                 .process(new AdClickKeyedProcessFunction(100, outputTagAdClick));
