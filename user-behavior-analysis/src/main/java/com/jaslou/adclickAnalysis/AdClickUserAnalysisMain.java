@@ -32,7 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 
 // count of userId click adID
-public class AdClickUserAnalysismain {
+public class AdClickUserAnalysisMain {
     public static void main(String[] args) throws Exception{
         //1. set up the streaming execution environment
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -42,7 +42,7 @@ public class AdClickUserAnalysismain {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         //2. read data from csv
-        URL resource = AdClickUserAnalysismain.class.getClassLoader().getResource("AdClickLog.csv");
+        URL resource = AdClickUserAnalysisMain.class.getClassLoader().getResource("AdClickLog.csv");
         Path path = Path.fromLocalFile(new File(resource.toURI()));
 
         //3.create a PojoTypeInfo and PojoCsvInputFormat
@@ -124,7 +124,7 @@ class AdClickProcessFunction extends KeyedProcessFunction<Long, AdClickUserCount
 
     @Override
     public void open(Configuration parameters) throws Exception {
-        userResult = getRuntimeContext().getListState(new ListStateDescriptor<AdClickUserCountResult>("userListState", AdClickUserCountResult.class));
+        userResult = getRuntimeContext().getListState(new ListStateDescriptor<>("userListState", AdClickUserCountResult.class));
     }
 
     @Override
