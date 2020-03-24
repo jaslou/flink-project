@@ -1,6 +1,7 @@
 package com.jaslou.cep;
 
 import com.jaslou.source.SensorEvent;
+import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.io.PojoCsvInputFormat;
 import org.apache.flink.api.java.typeutils.PojoTypeInfo;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
@@ -41,7 +42,7 @@ public class CEPMain {
 
         // 创建输入流
         SingleOutputStreamOperator<SensorEvent> inputEventStream = env.createInput(csvInputFormat, typeInfo)
-                .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor<SensorEvent>(Time.seconds(1L)) {
+                .assignTimestampsAndWatermarks(new BoundedOutOfOrdernessTimestampExtractor<SensorEvent>(Time.seconds(2L)) {
                     @Override
                     public long extractTimestamp(SensorEvent element) {
                         return element.timestamp;
@@ -60,7 +61,7 @@ public class CEPMain {
                         return value.temperature >= MAX_TEMPERATURE;
                     }
                 }).next("second_event")
-                .where(new IterativeCondition<SensorEvent>() {
+                    .where(new IterativeCondition<SensorEvent>() {
                     @Override
                     public boolean filter(SensorEvent value, Context<SensorEvent> ctx) throws Exception {
                         return value.temperature >= MAX_TEMPERATURE;
@@ -76,11 +77,11 @@ public class CEPMain {
             SensorEvent second_event = pattern.get("second_event").get(0);
             out.collect(new SensorWarning(first_event.id,
                     (first_event.temperature + second_event.temperature) / 2));
-        });
+        }, TypeInformation.of(SensorWarning.class));
 
         // 创建报警模式
         Pattern<SensorWarning, SensorWarning> alertPattern = Pattern.<SensorWarning>begin("first_warning")
-                .next("second_warning").times(4).within(Time.seconds(20));
+                .next("second_warning").within(Time.seconds(20));
         // 创建报警模式流
         PatternStream<SensorWarning> alertPatternStream = CEP.pattern(warningStream.keyBy("id"), alertPattern);
 
@@ -91,7 +92,7 @@ public class CEPMain {
             if (first_warning.averageTemperature <= second_warning.averageTemperature) {
                 out.collect(new SensorAlert("#############################_" + first_warning.id));
             }
-        });
+        }, TypeInformation.of(SensorAlert.class));
         // 打印输出
         alertStream.print();
 
