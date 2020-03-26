@@ -2,7 +2,6 @@ package com.jaslou.orderAnalysis;
 
 import com.jaslou.orderAnalysis.domain.OrderEvent;
 import com.jaslou.orderAnalysis.domain.OrderTimeResult;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.io.PojoCsvInputFormat;
 import org.apache.flink.api.java.typeutils.PojoTypeInfo;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
@@ -26,7 +25,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-public class OrderPayAnalysisMain {
+/**
+ * 使用Flink CEP 处理下单后15分钟内未支付时的预警信息
+ */
+public class OrderPayAnalysisCEPMain {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
@@ -34,7 +36,7 @@ public class OrderPayAnalysisMain {
 
 
         // 读取文件
-        URL resource = OrderPayAnalysisMain.class.getClassLoader().getResource("OrderLog.csv");
+        URL resource = OrderPayAnalysisCEPMain.class.getClassLoader().getResource("OrderLog.csv");
         Path path = Path.fromLocalFile(new File(resource.toURI()));
 
         // 定义字段
