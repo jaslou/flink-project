@@ -70,7 +70,7 @@ public class OrderPayAndReceiptAnalysisMain {
     // 获取支付订单输入流
     public static  SingleOutputStreamOperator<OrderEvent> getPayStream(StreamExecutionEnvironment env) throws Exception {
         // 读取文件
-        URL resource = OrderPayAnalysisMain.class.getClassLoader().getResource("OrderLog.csv");
+        URL resource = OrderPayAndReceiptAnalysisMain.class.getClassLoader().getResource("OrderLog.csv");
         Path path = Path.fromLocalFile(new File(resource.toURI()));
 
         // 定义字段
@@ -89,7 +89,7 @@ public class OrderPayAndReceiptAnalysisMain {
     // 获取支付回执输入流
     public static  SingleOutputStreamOperator<ReceiptEvent> getReceiptStream(StreamExecutionEnvironment env) throws Exception {
         // 读取文件
-        URL resource = OrderPayAnalysisMain.class.getClassLoader().getResource("receiptLog.csv");
+        URL resource = OrderPayAndReceiptAnalysisMain.class.getClassLoader().getResource("receiptLog.csv");
         Path path = Path.fromLocalFile(new File(resource.toURI()));
 
         // 定义字段

@@ -2,7 +2,6 @@ package com.jaslou.orderAnalysis;
 
 import com.jaslou.orderAnalysis.domain.OrderEvent;
 import com.jaslou.orderAnalysis.domain.ReceiptEvent;
-import org.apache.flink.api.common.functions.RuntimeContext;
 import org.apache.flink.api.java.io.PojoCsvInputFormat;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.typeutils.PojoTypeInfo;
@@ -68,7 +67,7 @@ public class OrderPayAndReceiptStreamJoin {
     // 获取支付回执输入流
     public static SingleOutputStreamOperator<ReceiptEvent> getReceiptStream(StreamExecutionEnvironment env) throws Exception {
         // 读取文件
-        URL resource = OrderPayAnalysisMain.class.getClassLoader().getResource("joinreceiptLog.csv");
+        URL resource = OrderPayAndReceiptStreamJoin.class.getClassLoader().getResource("joinreceiptLog.csv");
         Path path = Path.fromLocalFile(new File(resource.toURI()));
 
         // 定义字段
@@ -87,7 +86,7 @@ public class OrderPayAndReceiptStreamJoin {
     // 获取支付订单输入流
     public static  SingleOutputStreamOperator<OrderEvent> getPayStream(StreamExecutionEnvironment env) throws Exception {
         // 读取文件
-        URL resource = OrderPayAnalysisMain.class.getClassLoader().getResource("joinOrderLog.csv");
+        URL resource = OrderPayAndReceiptStreamJoin.class.getClassLoader().getResource("joinOrderLog.csv");
         Path path = Path.fromLocalFile(new File(resource.toURI()));
 
         // 定义字段
