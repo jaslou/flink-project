@@ -21,7 +21,7 @@ public class SQLDemo {
 
 
         DataStream<Order> sourceA = env.fromCollection(Arrays.asList(
-                new Order(1L, "beer", 3),
+                new Order(1L, "beer", 5),
                 new Order(1L, "diaper", 4),
                 new Order(3L, "rubber", 2)
         ));
