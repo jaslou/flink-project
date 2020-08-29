@@ -50,14 +50,14 @@ public class PropertyUtil {
      * @param config_file
      * @return
      */
-    public static Properties getProperties(String config_file) {
+    public static Properties getProperties(String configFile) {
         Properties properties = new Properties();
-        InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(config_file);
+        InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(configFile);
         try  {
             InputStreamReader reader = new InputStreamReader(input, "UTF-8");
             properties.load(reader);
         } catch (IOException e) {
-        System.err.println( ">>>+" + config_file +"<<<资源文件加载失败!");
+        System.err.println( ">>>+" + configFile +"<<<资源文件加载失败!");
         e.printStackTrace();
         }
         return properties;

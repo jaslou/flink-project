@@ -12,12 +12,13 @@
         <module>flink-project-example</module>
         <module>user-behavior-analysis</module>
         <module>flink-table-sql</module>
+        <module>flink-table-sql-1.11</module>
     </modules>
 
     <properties>
-        <flink.version>1.9.0</flink.version>
+        <flink.version>1.10.0</flink.version>
         <scala.version>2.11.12</scala.version>
-        <hbase.version>1.3.3</hbase.version>
+        <hbase.version>1.4.3</hbase.version>
         <scala.binary.version>2.11</scala.binary.version>
         <mockito.version>2.21.0</mockito.version>
         <powermock.version>2.0.2</powermock.version>
@@ -25,11 +26,11 @@
 
     <dependencies>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-csv-sql</artifactId>
             <version>1.9.0</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -47,6 +48,12 @@
 
         <dependency>
             <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-api-java</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-api-java-bridge_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
@@ -60,6 +67,18 @@
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-table-planner_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-table-planner-blink_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-json</artifactId>
             <version>${flink.version}</version>
         </dependency>
 
@@ -101,7 +120,7 @@
 
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-filesystem_2.11</artifactId>
+            <artifactId>flink-connector-filesystem_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
 
@@ -122,6 +141,12 @@
             <artifactId>flink-cep_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-jdbc_${scala.binary.version}</artifactId>-->
+<!--            <version>${flink.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -147,11 +172,11 @@
             <version>1.1.16</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-hbase_2.12</artifactId>
-            <version>1.9.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-hbase_${scala.binary.version}</artifactId>-->
+<!--            <version>${flink.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.hbase</groupId>

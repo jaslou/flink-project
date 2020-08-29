@@ -29,8 +29,12 @@ public class SensorEvent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         SensorEvent that = (SensorEvent) o;
         return timestamp == that.timestamp &&
                 Double.compare(that.temperature, temperature) == 0 &&

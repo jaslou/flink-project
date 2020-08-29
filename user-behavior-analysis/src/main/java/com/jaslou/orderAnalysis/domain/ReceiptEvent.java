@@ -3,9 +3,18 @@ package com.jaslou.orderAnalysis.domain;
 import java.util.Objects;
 
 public class ReceiptEvent {
-    public String txId; // 交易ID，支付回调后ID
-    public String payChannel; // 支付通道
-    public Long timestamp; // 时间戳
+    /**
+     * 交易ID，支付回调后ID
+     */
+    public String txId;
+    /**
+     * 支付通道
+     */
+    public String payChannel;
+    /**
+     * 时间戳
+     */
+    public Long timestamp;
 
     public ReceiptEvent(String txId, String payChannel, Long timestamp) {
         this.txId = txId;
@@ -27,8 +36,12 @@ public class ReceiptEvent {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ReceiptEvent that = (ReceiptEvent) o;
         return Objects.equals(txId, that.txId) &&
                 Objects.equals(payChannel, that.payChannel) &&

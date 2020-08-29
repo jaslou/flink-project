@@ -27,7 +27,6 @@ public class HbaseMain {
     // initialize connection and admin
     static {
         Configuration configuration = HBaseConfiguration.create();
-        configuration.set("hbase.rootdir", PropertyUtil.getStrValue("hbase.rootdir"));
         configuration.set("hbase.zookeeper.quorum", PropertyUtil.getStrValue("hbase.zookeeper.quorum"));
         configuration.set("hbase.client.scanner.timeout.period", PropertyUtil.getStrValue("hbase.client.scanner.timeout.period"));
         configuration.set("hbase.rpc.timeout", PropertyUtil.getStrValue("hbase.rpc.timeout"));
@@ -239,10 +238,10 @@ public class HbaseMain {
 
     public static void main(String[] args) throws Exception {
 
-//        scanTable("student");
-            getData("student","1002", "info2", "address");
+        scanTable("test-table");
+//            getData("student","1002", "info2", "address");
 //        createTable("student2", "info", "info2");
-        putData("student", "1001", "info1","phone","152*******");
+//        putData("student", "1001", "info1","phone","152*******");
 
         close();
 

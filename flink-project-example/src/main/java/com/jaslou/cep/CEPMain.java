@@ -61,13 +61,13 @@ public class CEPMain {
                 .where(new SimpleCondition<SensorEvent>() {
                     @Override
                     public boolean filter(SensorEvent value) throws Exception {
-                        return value.type.equals("start");
+                        return "start".equals(value.type);
                     }
                 }).followedBy("second_event")
                     .where(new IterativeCondition<SensorEvent>() {
                     @Override
                     public boolean filter(SensorEvent value, Context<SensorEvent> ctx) throws Exception {
-                        return value.type.equals("middle");
+                        return "middle".equals(value.type);
                     }
                 }).optional();
 //                .followedByAny("third_event")
@@ -86,11 +86,11 @@ public class CEPMain {
             @Override
             public void flatSelect(Map<String, List<SensorEvent>> pattern, Collector<String> out) throws Exception {
                 StringBuilder builder = new StringBuilder();
-                List<SensorEvent> first_event = pattern.get("first_event");
-                List<SensorEvent> second_event = pattern.get("second_event");
-                builder.append(first_event.get(0).timestamp).append(",");
-                if (second_event != null) {
-                    builder.append(second_event.get(0).timestamp);
+                List<SensorEvent> firstEvent = pattern.get("first_event");
+                List<SensorEvent> secondEvent = pattern.get("second_event");
+                builder.append(firstEvent.get(0).timestamp).append(",");
+                if (secondEvent != null) {
+                    builder.append(secondEvent.get(0).timestamp);
                 }
                 out.collect(builder.toString());
             }
