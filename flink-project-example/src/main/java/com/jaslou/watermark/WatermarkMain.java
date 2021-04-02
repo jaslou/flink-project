@@ -12,6 +12,8 @@ import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.watermark.Watermark;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
+import org.apache.flink.streaming.api.windowing.triggers.ContinuousProcessingTimeTrigger;
+import org.apache.flink.streaming.api.windowing.triggers.CountTrigger;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 import org.apache.flink.util.OutputTag;
@@ -21,6 +23,12 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
+/**
+ * google,1617266811640
+ * google,1617266811740
+ * google,1617266813640
+ * google,1617266818640
+ */
 public class WatermarkMain {
 
     public static  OutputTag<Tuple2<String, Long>> outputTag = new OutputTag<Tuple2<String, Long>>("delay_data") {};
@@ -66,7 +74,9 @@ public class WatermarkMain {
                 })
                 .keyBy(r -> r.f0)
                 .window(TumblingEventTimeWindows.of(Time.seconds(5)))
-                .allowedLateness(Time.seconds(2))
+                //.allowedLateness(Time.seconds(2))
+//                .trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(2)))
+//                .trigger(CountTrigger.of(2))
                 .sideOutputLateData(outputTag)
                 .process(new MyPoccessWindowFunction());
 
