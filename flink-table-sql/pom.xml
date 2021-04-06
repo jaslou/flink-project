@@ -12,7 +12,7 @@
     <artifactId>flink-table-sql</artifactId>
 
     <properties>
-        <flink.version>1.10.0</flink.version>
+        <flink.version>1.11.3</flink.version>
         <scala.version>2.11.12</scala.version>
         <hbase.version>1.3.3</hbase.version>
         <scala.binary.version>2.11</scala.binary.version>
