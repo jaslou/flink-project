@@ -62,4 +62,8 @@ public class PropertyUtil {
         }
         return properties;
     }
+
+    public static Properties getProperties() {
+        return contextProperties;
+    }
 }
