@@ -75,7 +75,7 @@ public class WatermarkMain {
                 .keyBy(r -> r.f0)
                 .window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 //.allowedLateness(Time.seconds(2))
-//                .trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(2)))
+                .trigger(ContinuousProcessingTimeTrigger.of(Time.seconds(2)))
 //                .trigger(CountTrigger.of(2))
                 .sideOutputLateData(outputTag)
                 .process(new MyPoccessWindowFunction());
