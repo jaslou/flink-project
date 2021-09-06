@@ -21,15 +21,16 @@
         <scala.binary.version>2.11</scala.binary.version>
         <mockito.version>2.21.0</mockito.version>
         <powermock.version>2.0.2</powermock.version>
+        <oracle.version>11.2.0.4</oracle.version>
     </properties>
 
     <dependencies>
 
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-csv-sql</artifactId>
-            <version>1.9.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-csv-sql</artifactId>-->
+<!--            <version>1.9.0</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -126,7 +127,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.8</version>
+            <version>4.5.13</version>
         </dependency>
 
         <dependency>
@@ -199,6 +200,30 @@
                     <artifactId>mockito-core</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>${oracle.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.yandex.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.3.1</version>
         </dependency>
 
 
