@@ -1,7 +1,10 @@
 package jaslou;
 
+import org.apache.flink.api.java.utils.ParameterTool;
+
 public class TestApi {
     public static void main(String[] args) {
-        System.out.println(8&2);
+        ParameterTool params = ParameterTool.fromArgs(args);
+
     }
 }
